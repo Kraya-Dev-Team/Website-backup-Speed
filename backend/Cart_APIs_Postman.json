@@ -1,0 +1,140 @@
+{
+  "info": {
+    "name": "OmniCore Cart APIs",
+    "description": "Postman collection to test Cart Endpoint interactions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Cart",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/cart",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "cart"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update/Set Cart Items",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"productId\": \"replace_with_valid_objectid\",\n      \"variantId\": \"variant_1\",\n      \"quantity\": 2,\n      \"price\": 1050\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/cart",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "cart"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Sync Local Cart with Server",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"productId\": \"replace_with_valid_objectid\",\n      \"variantId\": \"variant_1\",\n      \"quantity\": 1,\n      \"price\": 1050\n    },\n    {\n      \"productId\": \"replace_with_another_id\",\n      \"variantId\": \"variant_2\",\n      \"quantity\": 3,\n      \"price\": 900\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/cart/sync",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "cart",
+            "sync"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Clear Cart",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/cart",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "cart"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "token",
+      "value": "replace_with_your_auth_jwt_token"
+    }
+  ]
+}

@@ -1,0 +1,1285 @@
+{
+  "info": {
+    "_postman_id": "c51414b1-10c2-478d-add3-0cff80256171",
+    "name": "Kraya",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54311691",
+    "_collection_link": "https://go.postman.co/collection/54310788-c51414b1-10c2-478d-add3-0cff80256171?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "getUser",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Local}}/user/me",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "user",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "send-otp",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"phone\":\"8347110736\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/auth/send-otp",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "auth",
+                "send-otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "verify-otp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"8347110736\",\n  \"code\":\"6932\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/auth/verify-otp",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "auth",
+                "verify-otp"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request Copy",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"+918347110736\",\n  \"code\":\"1244\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Local}}/auth/verify-otp",
+                  "host": [
+                    "{{Local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "verify-otp"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "604"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"25c-vf3+YLo1Hbo/4SDKdrNOnsnYUuo\""
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 06 Apr 2026 13:10:15 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"user\": {\n        \"id\": \"69d3ade535a25def356e5554\",\n        \"phone\": \"918347110736\",\n        \"isVerified\": false,\n        \"createdAt\": \"2026-04-06T12:58:13.166Z\",\n        \"updatedAt\": \"2026-04-06T12:58:13.166Z\"\n    },\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQzYWRlNTM1YTI1ZGVmMzU2ZTU1NTQiLCJzZXNzaW9uSWQiOiIiLCJpYXQiOjE3NzU0ODEwMTQsImV4cCI6MTc3NTQ4MTkxNH0.OgY78CVPp8xBCsXXk3wGoDQAbiEiW4xlORlap-Nab7g\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQzYWRlNTM1YTI1ZGVmMzU2ZTU1NTQiLCJzZXNzaW9uSWQiOiIiLCJpYXQiOjE3NzU0ODEwMTQsImV4cCI6MTc3NjA4NTgxNH0.l-Yw_Ctn60wIgFbfyYGnviMYp_nQ23fJnUnnbYa2Vs0\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQzYWRlNTM1YTI1ZGVmMzU2ZTU1NTQiLCJzZXNzaW9uSWQiOiIiLCJpYXQiOjE3NzU0ODExMjgsImV4cCI6MTc3NjA4NTkyOH0.n9KKM0NY9fmYxsY94b1u876C_g0cjI58K-3QN4tloIk\"\n\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Local}}/auth/refresh",
+                  "host": [
+                    "{{Local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "refresh"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'none'"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "155"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 06 Apr 2026 13:13:19 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot GET /api/auth/refresh</pre>\n    </body>\n</html>"
+            }
+          ]
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQzYWRlNTM1YTI1ZGVmMzU2ZTU1NTQiLCJzZXNzaW9uSWQiOiIiLCJpYXQiOjE3NzU0ODExMjgsImV4cCI6MTc3NjA4NTkyOH0.n9KKM0NY9fmYxsY94b1u876C_g0cjI58K-3QN4tloIk\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Local}}/auth/logout",
+                  "host": [
+                    "{{Local}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'none'"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "154"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 06 Apr 2026 13:14:59 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot GET /api/auth/logout</pre>\n    </body>\n</html>"
+            }
+          ]
+        },
+        {
+          "name": "verify-email",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"priyanshchauhan4416@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/auth/send-email-otp",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "auth",
+                "send-email-otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "send-otp-verify-email-address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"priyanshchauhan4416@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/auth/send-email-otp",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "auth",
+                "send-email-otp"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "featured / list",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{Local}}/products/featured",
+                  "host": [
+                    "{{Local}}"
+                  ],
+                  "path": [
+                    "products",
+                    "featured"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1750-UmW3IHos8cPnhf5Rp8gG+929y1U\""
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 06 Apr 2026 10:15:55 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"data\": {\n        \"items\": [\n            {\n                \"id\": \"69d3876151dbd83caee1fe3a\",\n                \"name\": \"Kraya Velvet Amber\",\n                \"slug\": \"kraya-velvet-amber\",\n                \"description\": \"A warm and sensual amber fragrance that wraps you in luxury. Rich amber notes are enhanced with hints of vanilla, benzoin, and soft woods, creating a cozy and inviting aura that is perfect for cooler weather.\",\n                \"shortDescription\": \"Warm amber with vanilla and woods\",\n                \"brand\": {\n                    \"id\": \"kraya\",\n                    \"name\": \"Kraya\"\n                },\n                \"category\": {\n                    \"id\": \"oriental\",\n                    \"name\": \"Oriental Collection\"\n                },\n                \"type\": \"perfume\",\n                \"gender\": \"unisex\",\n                \"perfumeNotes\": {\n                    \"top\": [\n                        \"cinnamon\",\n                        \"cardamom\",\n                        \"orange\"\n                    ],\n                    \"heart\": [\n                        \"amber\",\n                        \"labdanum\",\n                        \"frankincense\"\n                    ],\n                    \"base\": [\n                        \"vanilla\",\n                        \"benzoin\",\n                        \"sandalwood\",\n                        \"musk\"\n                    ]\n                },\n                \"concentration\": \"parfum\",\n                \"season\": \"fall\",\n                \"mood\": [\n                    \"warm\",\n                    \"cozy\",\n                    \"sensual\"\n                ],\n                \"images\": [\n                    {\n                        \"url\": \"https://example.com/kraya-velvet-amber-1.jpg\",\n                        \"isPrimary\": true\n                    },\n                    {\n                        \"url\": \"https://example.com/kraya-velvet-amber-2.jpg\"\n                    }\n                ],\n                \"variants\": [\n                    {\n                        \"id\": \"var-007\",\n                        \"size\": \"30\",\n                        \"unit\": \"ml\",\n                        \"price\": 5000,\n                        \"stock\": 25,\n                        \"sku\": \"KVA-30ML\",\n                        \"isAvailable\": true\n                    },\n                    {\n                        \"id\": \"var-008\",\n                        \"size\": \"50\",\n                        \"unit\": \"ml\",\n                        \"price\": 7800,\n                        \"stock\": 15,\n                        \"sku\": \"KVA-50ML\",\n                        \"isAvailable\": true\n                    }\n                ],\n                \"basePrice\": 5000,\n                \"rating\": 4.9,\n                \"reviewCount\": 67,\n                \"isFeatured\": true,\n                \"isNew\": true,\n                \"isBestseller\": false,\n                \"tags\": [\n                    \"amber\",\n                    \"oriental\",\n                    \"warm\",\n                    \"fall\",\n                    \"luxury\",\n                    \"winter\"\n                ],\n                \"shipping\": {\n                    \"weight\": 140,\n                    \"dimensions\": {\n                        \"length\": 7,\n                        \"width\": 5,\n                        \"height\": 11\n                    },\n                    \"freeShipping\": true,\n                    \"shippingTime\": \"2-4 business days\"\n                },\n                \"createdAt\": \"2026-04-06T10:13:53.805Z\",\n                \"updatedAt\": \"2026-04-06T10:13:53.805Z\"\n            },\n            {\n                \"id\": \"69d3875951dbd83caee1fe38\",\n                \"name\": \"Kraya Ocean Breeze\",\n                \"slug\": \"kraya-ocean-breeze\",\n                \"description\": \"A refreshing aquatic fragrance inspired by the serene ocean. Crisp sea notes blend with citrus and subtle marine accents, creating a clean and invigorating scent perfect for everyday wear and active lifestyles.\",\n                \"shortDescription\": \"Fresh aquatic with citrus notes\",\n                \"brand\": {\n                    \"id\": \"kraya\",\n                    \"name\": \"Kraya\"\n                },\n                \"category\": {\n                    \"id\": \"fresh\",\n                    \"name\": \"Fresh Collection\"\n                },\n                \"type\": \"perfume\",\n                \"gender\": \"men\",\n                \"perfumeNotes\": {\n                    \"top\": [\n                        \"bergamot\",\n                        \"lemon\",\n                        \"sea salt\"\n                    ],\n                    \"heart\": [\n                        \"sea notes\",\n                        \"jasmine\",\n                        \"green tea\"\n                    ],\n                    \"base\": [\n                        \"ambergris\",\n                        \"musk\",\n                        \"cedar\"\n                    ]\n                },\n                \"concentration\": \"eau-de-toilette\",\n                \"season\": \"summer\",\n                \"mood\": [\n                    \"fresh\",\n                    \"energetic\",\n                    \"sporty\"\n                ],\n                \"images\": [\n                    {\n                        \"url\": \"https://example.com/kraya-ocean-breeze-1.jpg\",\n                        \"isPrimary\": true\n                    },\n                    {\n                        \"url\": \"https://example.com/kraya-ocean-breeze-2.jpg\"\n                    }\n                ],\n                \"variants\": [\n                    {\n                        \"id\": \"var-005\",\n                        \"size\": \"50\",\n                        \"unit\": \"ml\",\n                        \"price\": 2800,\n                        \"stock\": 100,\n                        \"sku\": \"KOB-50ML\",\n                        \"isAvailable\": true\n                    },\n                    {\n                        \"id\": \"var-006\",\n                        \"size\": \"100\",\n                        \"unit\": \"ml\",\n                        \"price\": 4800,\n                        \"stock\": 60,\n                        \"sku\": \"KOB-100ML\",\n                        \"isAvailable\": true\n                    }\n                ],\n                \"basePrice\": 2800,\n                \"discountPrice\": 2380,\n                \"discountPercentage\": 15,\n                \"rating\": 4.5,\n                \"reviewCount\": 156,\n                \"isFeatured\": false,\n                \"isNew\": false,\n                \"isBestseller\": true,\n                \"tags\": [\n                    \"aquatic\",\n                    \"fresh\",\n                    \"summer\",\n                    \"men\",\n                    \"sporty\"\n                ],\n                \"shipping\": {\n                    \"weight\": 100,\n                    \"dimensions\": {\n                        \"length\": 6,\n                        \"width\": 4,\n                        \"height\": 10\n                    },\n                    \"freeShipping\": false,\n                    \"shippingTime\": \"3-5 business days\"\n                },\n                \"createdAt\": \"2026-04-06T10:13:45.155Z\",\n                \"updatedAt\": \"2026-04-06T10:13:45.155Z\"\n            },\n            {\n                \"id\": \"69d3875351dbd83caee1fe36\",\n                \"name\": \"Kraya Rose Gold\",\n                \"slug\": \"kraya-rose-gold\",\n                \"description\": \"An elegant and feminine fragrance that captures the essence of luxury. This beautiful blend features fresh rose petals combined with creamy vanilla and soft musk, creating a sophisticated scent that lingers throughout the day.\",\n                \"shortDescription\": \"Elegant rose with vanilla and musk\",\n                \"brand\": {\n                    \"id\": \"kraya\",\n                    \"name\": \"Kraya\"\n                },\n                \"category\": {\n                    \"id\": \"floral\",\n                    \"name\": \"Floral Collection\"\n                },\n                \"type\": \"perfume\",\n                \"gender\": \"women\",\n                \"perfumeNotes\": {\n                    \"top\": [\n                        \"peach\",\n                        \"bergamot\",\n                        \"pink pepper\"\n                    ],\n                    \"heart\": [\n                        \"rose\",\n                        \"jasmine\",\n                        \"ylang-ylang\"\n                    ],\n                    \"base\": [\n                        \"vanilla\",\n                        \"musk\",\n                        \"sandalwood\"\n                    ]\n                },\n                \"concentration\": \"eau-de-toilette\",\n                \"season\": \"spring\",\n                \"mood\": [\n                    \"elegant\",\n                    \"feminine\",\n                    \"romantic\"\n                ],\n                \"images\": [\n                    {\n                        \"url\": \"https://example.com/kraya-rose-gold-1.jpg\",\n                        \"isPrimary\": true\n                    },\n                    {\n                        \"url\": \"https://example.com/kraya-rose-gold-2.jpg\"\n                    }\n                ],\n                \"variants\": [\n                    {\n                        \"id\": \"var-003\",\n                        \"size\": \"50\",\n                        \"unit\": \"ml\",\n                        \"price\": 3200,\n                        \"stock\": 75,\n                        \"sku\": \"KRG-50ML\",\n                        \"isAvailable\": true\n                    },\n                    {\n                        \"id\": \"var-004\",\n                        \"size\": \"100\",\n                        \"unit\": \"ml\",\n                        \"price\": 5500,\n                        \"stock\": 40,\n                        \"sku\": \"KRG-100ML\",\n                        \"isAvailable\": true\n                    }\n                ],\n                \"basePrice\": 3200,\n                \"rating\": 4.6,\n                \"reviewCount\": 89,\n                \"isFeatured\": true,\n                \"isNew\": true,\n                \"isBestseller\": false,\n                \"tags\": [\n                    \"rose\",\n                    \"floral\",\n                    \"feminine\",\n                    \"spring\",\n                    \"elegant\"\n                ],\n                \"shipping\": {\n                    \"weight\": 120,\n                    \"dimensions\": {\n                        \"length\": 7,\n                        \"width\": 4,\n                        \"height\": 11\n                    },\n                    \"freeShipping\": false,\n                    \"shippingTime\": \"3-5 business days\"\n                },\n                \"createdAt\": \"2026-04-06T10:13:39.295Z\",\n                \"updatedAt\": \"2026-04-06T10:13:39.295Z\"\n            },\n            {\n                \"id\": \"69d3874951dbd83caee1fe34\",\n                \"name\": \"Kraya Midnight Oud\",\n                \"slug\": \"kraya-midnight-oud\",\n                \"description\": \"A rich and luxurious oud fragrance with deep amber notes. This exotic blend combines the finest Middle Eastern oud with warm amber and sensual musk for an unforgettable scent experience. Perfect for evening wear and special occasions.\",\n                \"shortDescription\": \"Luxurious oud with amber and musk\",\n                \"brand\": {\n                    \"id\": \"kraya\",\n                    \"name\": \"Kraya\"\n                },\n                \"category\": {\n                    \"id\": \"luxury\",\n                    \"name\": \"Luxury Perfumes\"\n                },\n                \"type\": \"perfume\",\n                \"gender\": \"unisex\",\n                \"perfumeNotes\": {\n                    \"top\": [\n                        \"bergamot\",\n                        \"black pepper\",\n                        \"saffron\"\n                    ],\n                    \"heart\": [\n                        \"rose\",\n                        \" jasmine\",\n                        \"oud\"\n                    ],\n                    \"base\": [\n                        \"amber\",\n                        \"musk\",\n                        \"sandalwood\",\n                        \"patchouli\"\n                    ]\n                },\n                \"concentration\": \"eau-de-parfum\",\n                \"season\": \"winter\",\n                \"mood\": [\n                    \"luxurious\",\n                    \"seductive\",\n                    \"exotic\"\n                ],\n                \"images\": [\n                    {\n                        \"url\": \"https://example.com/kraya-midnight-oud-1.jpg\",\n                        \"isPrimary\": true\n                    },\n                    {\n                        \"url\": \"https://example.com/kraya-midnight-oud-2.jpg\"\n                    }\n                ],\n                \"variants\": [\n                    {\n                        \"id\": \"var-001\",\n                        \"size\": \"50\",\n                        \"unit\": \"ml\",\n                        \"price\": 4500,\n                        \"stock\": 50,\n                        \"sku\": \"KMO-50ML\",\n                        \"isAvailable\": true\n                    },\n                    {\n                        \"id\": \"var-002\",\n                        \"size\": \"100\",\n                        \"unit\": \"ml\",\n                        \"price\": 7500,\n                        \"stock\": 30,\n                        \"sku\": \"KMO-100ML\",\n                        \"isAvailable\": true\n                    }\n                ],\n                \"basePrice\": 4500,\n                \"discountPrice\": 4050,\n                \"discountPercentage\": 10,\n                \"rating\": 4.8,\n                \"reviewCount\": 124,\n                \"isFeatured\": true,\n                \"isNew\": false,\n                \"isBestseller\": true,\n                \"tags\": [\n                    \"oud\",\n                    \"luxury\",\n                    \"winter\",\n                    \"unisex\",\n                    \"evening\"\n                ],\n                \"shipping\": {\n                    \"weight\": 150,\n                    \"dimensions\": {\n                        \"length\": 8,\n                        \"width\": 5,\n                        \"height\": 12\n                    },\n                    \"freeShipping\": true,\n                    \"shippingTime\": \"2-4 business days\"\n                },\n                \"createdAt\": \"2026-04-06T10:13:29.894Z\",\n                \"updatedAt\": \"2026-04-06T10:13:29.894Z\"\n            }\n        ],\n        \"total\": 4,\n        \"page\": 1,\n        \"limit\": 20,\n        \"totalPages\": 1\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add-product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getProductInfo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "createOrder",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"priyanshchauhan4416@gmail.com\",\n    \"shippingAddressId\":\"69e3c0b3e666427ef6f042bc\",\n    \"billingAddressId\":\"69e3c0b3e666427ef6f042bc\",\n    \"phone\":\"8347110736\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/orders/",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "orders",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "VerifyPayment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"orderId\":\"69ed05cf056b460470fc6e0f\",\n    \"razorpayPaymentId\":\"\",\n    \"razorpayOrderId\":\"order_Shp2e3SfH2DUxd\",\n    \"razorpaySignature\":\"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/orders/verify",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "orders",
+                "verify"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetMyOrders",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"orderId\":\"69ed05cf056b460470fc6e0f\",\n    \"razorpayPaymentId\":\"\",\n    \"razorpayOrderId\":\"\",\n    \"razorpaySignature\":\"\"\n}"
+            },
+            "url": {
+              "raw": "{{Local}}/orders/my-orders",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "orders",
+                "my-orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllOrders",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/admin/orders/",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "orders",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "getCart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Local}}/cart",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateCart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": " {\n    \"items\": [                                                      \n      {                                                           \n        \"productId\": \"69d3874951dbd83caee1fe34\",\n        \"variantId\": \"var-002\",                 \n        \"quantity\": 1,\n        \"price\": 7500                                               \n      }\n    ]                                                               \n  }                                                               \n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/cart/",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "cart",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Delivery",
+      "item": [
+        {
+          "name": "checkServiceability",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pickup_postcode\":\"390011\",\n    \"delivery_postcode\":\"390001\",\n    \"weight\":\"100\",\n    \"cod\":\"false\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/admin/delivery/serviceability?pickup_postcode=390011&delivery_postcode=380001&weight=100&cod=false&order_id=69ede12e8182a55d2b35c329",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "delivery",
+                "serviceability"
+              ],
+              "query": [
+                {
+                  "key": "pickup_postcode",
+                  "value": "390011"
+                },
+                {
+                  "key": "delivery_postcode",
+                  "value": "380001"
+                },
+                {
+                  "key": "weight",
+                  "value": "100"
+                },
+                {
+                  "key": "cod",
+                  "value": "false"
+                },
+                {
+                  "key": "order_id",
+                  "value": "69ede12e8182a55d2b35c329"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "generateLabel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"shipment_id\": [\"1305431251\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/admin/delivery/label",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "delivery",
+                "label"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createAWB",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shipment_id\": \"1305431251\",\n    \"courier_id\": \"101\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/admin/delivery/awb",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "delivery",
+                "awb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createShipment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/admin/orders/:id/shipment",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "orders",
+                ":id",
+                "shipment"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "69ede12e8182a55d2b35c329"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RequestPickup",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"shipment_id\": [1305431251],\n    \"status\":\"retry\",//if the first is failed than only this is required\n    \"pickup_date\":[\"2026-04-29\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/admin/delivery/pickup",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "delivery",
+                "pickup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "trackWithAWB",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Local}}/admin/delivery/track/:awb",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "delivery",
+                "track",
+                ":awb"
+              ],
+              "variable": [
+                {
+                  "key": "awb",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "trackWithAWB",
+              "originalRequest": {
+                "method": "GET",
+                "header": []
+              },
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"tracking_data\": {\n        \"track_status\": 1,\n        \"shipment_status\": 7,\n        \"shipment_track\": [\n            {\n                \"id\": 236612717,\n                \"awb_code\": \"141123221084922\",\n                \"courier_company_id\": 51,\n                \"shipment_id\": 236612717,\n                \"order_id\": 237157589,\n                \"pickup_date\": \"2022-07-18 20:28:00\",\n                \"delivered_date\": \"2022-07-19 11:37:00\",\n                \"weight\": \"0.30\",\n                \"packages\": 1,\n                \"current_status\": \"Delivered\",\n                \"delivered_to\": \"Chittoor\",\n                \"destination\": \"Chittoor\",\n                \"consignee_name\": \"\",\n                \"origin\": \"Banglore\",\n                \"courier_agent_details\": null,\n                \"courier_name\": \"Xpressbees Surface\",\n                \"edd\": null,\n                \"pod\": \"Available\",\n                \"pod_status\": \"https://s3-ap-southeast-1.amazonaws.com/kr-shipmultichannel/courier/51/pod/141123221084922.png\"\n            }\n        ],\n        \"shipment_track_activities\": [\n            {\n                \"date\": \"2022-07-19 11:37:00\",\n                \"status\": \"DLVD\",\n                \"activity\": \"Delivered\",\n                \"location\": \"MADANPALLI, Madanapalli, ANDHRA PRADESH\",\n                \"sr-status\": \"7\",\n                \"sr-status-label\": \"DELIVERED\"\n            },\n            {\n                \"date\": \"2022-07-19 08:57:00\",\n                \"status\": \"OFD\",\n                \"activity\": \"Out for Delivery Out for delivery: 383439-Nandinayani Reddy Bhaskara Sitics Logistics  (356231) (383439)-PDS22200085719383439-FromMob , MobileNo:- 9963133564\",\n                \"location\": \"MADANPALLI, Madanapalli, ANDHRA PRADESH\",\n                \"sr-status\": \"17\",\n                \"sr-status-label\": \"OUT FOR DELIVERY\"\n            },\n            {\n                \"date\": \"2022-07-19 07:33:00\",\n                \"status\": \"RAD\",\n                \"activity\": \"Reached at Destination Shipment BagOut From Bag : nxbg03894488\",\n                \"location\": \"MADANPALLI, Madanapalli, ANDHRA PRADESH\",\n                \"sr-status\": \"38\",\n                \"sr-status-label\": \"REACHED AT DESTINATION HUB\"\n            },\n            {\n                \"date\": \"2022-07-18 21:02:00\",\n                \"status\": \"IT\",\n                \"activity\": \"InTransit Shipment added in Bag nxbg03894488\",\n                \"location\": \"BLR/FC1, BANGALORE, KARNATAKA\",\n                \"sr-status\": \"18\",\n                \"sr-status-label\": \"IN TRANSIT\"\n            },\n            {\n                \"date\": \"2022-07-18 20:28:00\",\n                \"status\": \"PKD\",\n                \"activity\": \"Picked Shipment InScan from Manifest\",\n                \"location\": \"BLR/FC1, BANGALORE, KARNATAKA\",\n                \"sr-status\": \"6\",\n                \"sr-status-label\": \"SHIPPED\"\n            },\n            {\n                \"date\": \"2022-07-18 13:50:00\",\n                \"status\": \"PUD\",\n                \"activity\": \"PickDone \",\n                \"location\": \"RTO/CHD, BANGALORE, KARNATAKA\",\n                \"sr-status\": \"42\",\n                \"sr-status-label\": \"PICKED UP\"\n            },\n            {\n                \"date\": \"2022-07-18 10:04:00\",\n                \"status\": \"OFP\",\n                \"activity\": \"Out for Pickup \",\n                \"location\": \"RTO/CHD, BANGALORE, KARNATAKA\",\n                \"sr-status\": \"19\",\n                \"sr-status-label\": \"OUT FOR PICKUP\"\n            },\n            {\n                \"date\": \"2022-07-18 09:51:00\",\n                \"status\": \"DRC\",\n                \"activity\": \"Pending Manifest Data Received\",\n                \"location\": \"RTO/CHD, BANGALORE, KARNATAKA\",\n                \"sr-status\": \"NA\",\n                \"sr-status-label\": \"NA\"\n            }\n        ],\n        \"track_url\": \"https://shiprocket.co//tracking/141123221084922\",\n        \"etd\": \"2022-07-20 19:28:00\",\n        \"qc_response\": {\n            \"qc_image\": \"\",\n            \"qc_failed_reason\": \"\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Cancel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Local}}/admin/delivery/cancel",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "delivery",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "adminAnalytics",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": []\n}"
+            },
+            "url": {
+              "raw": "{{Local}}/admin/analytics",
+              "host": [
+                "{{Local}}"
+              ],
+              "path": [
+                "admin",
+                "analytics"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "heath",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ]
+}

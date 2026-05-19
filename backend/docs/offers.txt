@@ -1,0 +1,148 @@
+ All new and modified files are error-free. Here's a summary of everything implemented:     
+                                                                                                                                                           
+  ---                                                                                                                                                      
+  Offer System — What Was Built                                                                                                                            
+                                                                                                                                                           
+  4 Offer Types (src/models/OfferModel.ts)                                                                                                                 
+                                                                                                                                                           
+  ┌─────────────┬───────────────────────────────────────────────────────────────────┐                                                                      
+  │    Type     │                           How it works                            │                                                                      
+  ├─────────────┼───────────────────────────────────────────────────────────────────┤        
+  │ percentage  │ X% off subtotal, optional maxDiscountAmount cap and minOrderValue │
+  ├─────────────┼───────────────────────────────────────────────────────────────────┤
+  │ flat        │ Fixed ₹X off, optional minOrderValue                              │                                                                      
+  ├─────────────┼───────────────────────────────────────────────────────────────────┤                                                                      
+  │ buy_x_get_y │ Buy X total items → get Y cheapest items free                     │                                                                      
+  ├─────────────┼───────────────────────────────────────────────────────────────────┤                                                                      
+  │ cart_value  │ Cart subtotal ≥ minCartValue (e.g. ₹1000/3000) → ₹Y off           │        
+  └─────────────┴───────────────────────────────────────────────────────────────────┘                                                                      
+                                                                                             
+  All types support: maxUsageCount (total limit), maxUsagePerUser (per-user limit), startDate/endDate.                                                     
+                                                                                             
+  ---                                                                                                                                                      
+  APIs                                                                                       
+                                         
+  Public
+  - GET /offers — list active offers (limited fields, date-filtered)                                                                                       
+  - POST /offers/validate (auth required) — validate coupon against live cart, returns { discount, subtotal, shippingCost, tax, total }                    
+                                                                                                                                                           
+  Admin (/admin/offers)                                                                                                                                    
+  - POST /admin/offers — create offer                                                        
+  - GET /admin/offers — list all (filterable by isActive, paginated)                                                                                       
+  - GET /admin/offers/:id — get by ID                                                        
+  - PUT /admin/offers/:id — update                                                                                                                         
+  - DELETE /admin/offers/:id — delete                                                        
+                                                                                                                                                           
+  ---                                                                                                                                                      
+  Create Order Changes (src/controllers/OrderController.ts)
+                                                                                                                                                           
+  - Accepts offerCode in request body                                                        
+  - Validates the offer (active, date, usage limits, per-user cap, min order value)                                                                        
+  - Calculates and applies discount before creating Razorpay order                                                                                         
+  - Records usage in offer_usages collection + increments usageCount on the offer                                                                          
+  - Stores offerCode + offerTitle in the order document                                                                                                    
+                                                                                                                                                           
+✻ Baked for 4m 5s                                                                                                                                          
+                                                                                                                                                           
+❯ give me jason for adding the offers                                                                                                                      
+                                                                                                                                                           
+● Here are the JSON bodies for POST /admin/offers for all 4 types:                                                                                         
+                                                                                                                                                           
+  1. Percentage Discount                                                                                                                                   
+                                                                                                                                                           
+    "code": "SAVE10",                                                                                                                                      
+    "title": "10% Off on All Orders",                                                                                                                      
+    "description": "Get 10% off, max ₹200 discount",                                         
+    "type": "percentage",                                                                                                                                  
+    "discountPercentage": 10,
+    "maxDiscountAmount": 200,                                                                                                                              
+    "minOrderValue": 500,                                                                                                                                  
+    "maxUsageCount": 1000,               
+    "maxUsagePerUser": 1,                                                                                                                                  
+    "isActive": true,                                                                        
+    "startDate": "2026-04-30T00:00:00.000Z",
+    "endDate": "2026-05-31T23:59:59.000Z"                                                                                                                  
+  }
+                                                                                                                                                           
+  2. Flat Rupee Discount                                                                     
+  {                                                                                                                                                        
+    "code": "FLAT150",                                                                       
+    "title": "₹150 Off",                 
+    "description": "Flat ₹150 off on orders above ₹999",                                                                                                   
+    "type": "flat",                                     
+    "discountAmount": 150,                                                                                                                                 
+    "minOrderValue": 999,                                                                    
+    "maxUsageCount": 500,                                                                                                                                  
+    "maxUsagePerUser": 2,                                                                    
+    "isActive": true,                    
+    "startDate": "2026-04-30T00:00:00.000Z",                                                                                                               
+    "endDate": "2026-05-31T23:59:59.000Z"   
+  }                                                                                                                                                        
+                                                                                                                                                           
+  3. Buy X Get Y Free                    
+  {                                                                                                                                                        
+    "code": "BUY2GET1",                                                                      
+    "title": "Buy 2 Get 1 Free",         
+    "description": "Add 3 or more items — cheapest one is free",                                                                                           
+    "type": "buy_x_get_y",                                      
+    "buyQuantity": 3,                                                                                                                                      
+    "getQuantity": 1,                                                                        
+    "maxUsageCount": 200,                                                                                                                                  
+    "maxUsagePerUser": 1,                                                                    
+    "isActive": true,                                                                                                                                      
+    "startDate": "2026-04-30T00:00:00.000Z",
+    "endDate": "2026-05-31T23:59:59.000Z"                                                                                                                  
+  }                                                                                          
+                                                                                                                                                           
+  4. Cart Value Threshold Discount
+                                                                                                                                                           
+  {                                                                                          
+    "title": "₹200 Off on Cart above ₹1000",
+    "description": "Spend ₹1000 or more and save ₹200",                                                                                                    
+    "type": "cart_value",                              
+    "minCartValue": 1000,                                                                                                                                  
+    "cartDiscountAmount": 200,                                                               
+    "maxUsageCount": null,                                                                                                                                 
+    "maxUsagePerUser": 3,                                                                                                                                  
+    "isActive": true,                    
+    "startDate": "2026-04-30T00:00:00.000Z",                                                                                                               
+    "endDate": "2026-06-30T23:59:59.000Z"                                                    
+  }                                                                                                                                                        
+   
+  For ₹3000 threshold variant, just change minCartValue and cartDiscountAmount:                                                                            
+  {                                                                                                                                                        
+    "code": "CART3000",                  
+    "title": "₹500 Off on Cart above ₹3000",                                                                                                               
+    "type": "cart_value",                                                                    
+    "minCartValue": 3000,                
+    "type": "cart_value",
+    "minCartValue": 1000,
+    "cartDiscountAmount": 200,
+    "maxUsageCount": null,
+    "maxUsagePerUser": 3,
+    "isActive": true,
+    "startDate": "2026-04-30T00:00:00.000Z",
+    "endDate": "2026-06-30T23:59:59.000Z"
+  }
+
+  For ₹3000 threshold variant, just change minCartValue and cartDiscountAmount:
+  {
+    "code": "CART3000",
+    "title": "₹500 Off on Cart above ₹3000",
+    "type": "cart_value",
+    "minCartValue": 3000,
+    "cartDiscountAmount": 500,
+    "isActive": true
+  }
+
+  ---
+  Validate at checkout — POST /offers/validate (user auth required):
+  {
+    "offerCode": "SAVE10"
+  }
+
+  Apply during order creation — POST /orders:
+  {
+    "shippingAddressId": "your-address-id",
+    "offerCode": "SAVE10"
+  }

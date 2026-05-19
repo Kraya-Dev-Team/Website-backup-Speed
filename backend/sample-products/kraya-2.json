@@ -1,0 +1,65 @@
+{
+  "name": "Kraya Rose Gold",
+  "slug": "kraya-rose-gold",
+  "description": "An elegant and feminine fragrance that captures the essence of luxury. This beautiful blend features fresh rose petals combined with creamy vanilla and soft musk, creating a sophisticated scent that lingers throughout the day.",
+  "shortDescription": "Elegant rose with vanilla and musk",
+  "brand": {
+    "id": "kraya",
+    "name": "Kraya"
+  },
+  "category": {
+    "id": "floral",
+    "name": "Floral Collection"
+  },
+  "type": "perfume",
+  "gender": "women",
+  "perfumeNotes": {
+    "top": ["peach", "bergamot", "pink pepper"],
+    "heart": ["rose", "jasmine", "ylang-ylang"],
+    "base": ["vanilla", "musk", "sandalwood"]
+  },
+  "concentration": "eau-de-toilette",
+  "season": "spring",
+  "mood": ["elegant", "feminine", "romantic"],
+  "images": [
+    { "url": "https://example.com/kraya-rose-gold-1.jpg", "isPrimary": true },
+    { "url": "https://example.com/kraya-rose-gold-2.jpg" }
+  ],
+  "variants": [
+    {
+      "id": "var-003",
+      "size": "50",
+      "unit": "ml",
+      "price": 3200,
+      "stock": 75,
+      "sku": "KRG-50ML",
+      "isAvailable": true
+    },
+    {
+      "id": "var-004",
+      "size": "100",
+      "unit": "ml",
+      "price": 5500,
+      "stock": 40,
+      "sku": "KRG-100ML",
+      "isAvailable": true
+    }
+  ],
+  "basePrice": 3200,
+  "rating": 4.6,
+  "reviewCount": 89,
+  "isFeatured": true,
+  "isNew": true,
+  "isBestseller": false,
+  "isActive": true,
+  "isArchived": false,
+  "tags": ["rose", "floral", "feminine", "spring", "elegant"],
+  "shipping": {
+    "weight": 120,
+    "dimensions": { "length": 7, "width": 4, "height": 11 },
+    "freeShipping": false,
+    "shippingTime": "3-5 business days"
+  },
+  "metaTitle": "Kraya Rose Gold - Feminine Floral Perfume",
+  "metaDescription": "Experience the elegance of Kraya Rose Gold, a feminine Eau de Parfum with rose, vanilla and musk."
+}

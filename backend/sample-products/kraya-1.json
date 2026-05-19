@@ -1,0 +1,67 @@
+{
+  "name": "Kraya Midnight Oud",
+  "slug": "kraya-midnight-oud",
+  "description": "A rich and luxurious oud fragrance with deep amber notes. This exotic blend combines the finest Middle Eastern oud with warm amber and sensual musk for an unforgettable scent experience. Perfect for evening wear and special occasions.",
+  "shortDescription": "Luxurious oud with amber and musk",
+  "brand": {
+    "id": "kraya",
+    "name": "Kraya"
+  },
+  "category": {
+    "id": "luxury",
+    "name": "Luxury Perfumes"
+  },
+  "type": "perfume",
+  "gender": "unisex",
+  "perfumeNotes": {
+    "top": ["bergamot", "black pepper", "saffron"],
+    "heart": ["rose", " jasmine", "oud"],
+    "base": ["amber", "musk", "sandalwood", "patchouli"]
+  },
+  "concentration": "eau-de-parfum",
+  "season": "winter",
+  "mood": ["luxurious", "seductive", "exotic"],
+  "images": [
+    { "url": "https://example.com/kraya-midnight-oud-1.jpg", "isPrimary": true },
+    { "url": "https://example.com/kraya-midnight-oud-2.jpg" }
+  ],
+  "variants": [
+    {
+      "id": "var-001",
+      "size": "50",
+      "unit": "ml",
+      "price": 4500,
+      "stock": 50,
+      "sku": "KMO-50ML",
+      "isAvailable": true
+    },
+    {
+      "id": "var-002",
+      "size": "100",
+      "unit": "ml",
+      "price": 7500,
+      "stock": 30,
+      "sku": "KMO-100ML",
+      "isAvailable": true
+    }
+  ],
+  "basePrice": 4500,
+  "discountPercentage": 10,
+  "discountPrice": 4050,
+  "rating": 4.8,
+  "reviewCount": 124,
+  "isFeatured": true,
+  "isNew": false,
+  "isBestseller": true,
+  "isActive": true,
+  "isArchived": false,
+  "tags": ["oud", "luxury", "winter", "unisex", "evening"],
+  "shipping": {
+    "weight": 150,
+    "dimensions": { "length": 8, "width": 5, "height": 12 },
+    "freeShipping": true,
+    "shippingTime": "2-4 business days"
+  },
+  "metaTitle": "Kraya Midnight Oud - Premium Unisex Perfume",
+  "metaDescription": "Discover Kraya Midnight Oud, a luxurious unisex Eau de Parfum with rich oud, amber, and musk notes."
+}

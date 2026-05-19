@@ -1,0 +1,67 @@
+{
+  "name": "Kraya Ocean Breeze",
+  "slug": "kraya-ocean-breeze",
+  "description": "A refreshing aquatic fragrance inspired by the serene ocean. Crisp sea notes blend with citrus and subtle marine accents, creating a clean and invigorating scent perfect for everyday wear and active lifestyles.",
+  "shortDescription": "Fresh aquatic with citrus notes",
+  "brand": {
+    "id": "kraya",
+    "name": "Kraya"
+  },
+  "category": {
+    "id": "fresh",
+    "name": "Fresh Collection"
+  },
+  "type": "perfume",
+  "gender": "men",
+  "perfumeNotes": {
+    "top": ["bergamot", "lemon", "sea salt"],
+    "heart": ["sea notes", "jasmine", "green tea"],
+    "base": ["ambergris", "musk", "cedar"]
+  },
+  "concentration": "eau-de-toilette",
+  "season": "summer",
+  "mood": ["fresh", "energetic", "sporty"],
+  "images": [
+    { "url": "https://example.com/kraya-ocean-breeze-1.jpg", "isPrimary": true },
+    { "url": "https://example.com/kraya-ocean-breeze-2.jpg" }
+  ],
+  "variants": [
+    {
+      "id": "var-005",
+      "size": "50",
+      "unit": "ml",
+      "price": 2800,
+      "stock": 100,
+      "sku": "KOB-50ML",
+      "isAvailable": true
+    },
+    {
+      "id": "var-006",
+      "size": "100",
+      "unit": "ml",
+      "price": 4800,
+      "stock": 60,
+      "sku": "KOB-100ML",
+      "isAvailable": true
+    }
+  ],
+  "basePrice": 2800,
+  "discountPercentage": 15,
+  "discountPrice": 2380,
+  "rating": 4.5,
+  "reviewCount": 156,
+  "isFeatured": false,
+  "isNew": false,
+  "isBestseller": true,
+  "isActive": true,
+  "isArchived": false,
+  "tags": ["aquatic", "fresh", "summer", "men", "sporty"],
+  "shipping": {
+    "weight": 100,
+    "dimensions": { "length": 6, "width": 4, "height": 10 },
+    "freeShipping": false,
+    "shippingTime": "3-5 business days"
+  },
+  "metaTitle": "Kraya Ocean Breeze - Fresh Men's Fragrance",
+  "metaDescription": "Discover Kraya Ocean Breeze, a refreshing men's Eau de Parfum with ocean and citrus notes."
+}

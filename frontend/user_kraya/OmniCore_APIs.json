@@ -1,0 +1,282 @@
+{
+  "info": {
+    "name": "OmniCore API Collection",
+    "description": "Comprehensive API collection for OmniCore E-commerce Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"9876543210\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/send-otp", "host": ["{{baseUrl}}"], "path": ["auth", "send-otp"] }
+          },
+          "response": [{
+            "name": "Success",
+            "status": "OK",
+            "code": 200,
+            "_postman_previewlanguage": "json",
+            "body": "{\n  \"success\": true,\n  \"message\": \"OTP sent successfully\"\n}"
+          }]
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"9876543210\",\n  \"code\": \"123456\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/verify-otp", "host": ["{{baseUrl}}"], "path": ["auth", "verify-otp"] }
+          },
+          "response": [{
+            "name": "Success",
+            "status": "OK",
+            "code": 200,
+            "_postman_previewlanguage": "json",
+            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"user\": {\n      \"_id\": \"65f123abc456def789\",\n      \"phone\": \"9876543210\",\n      \"role\": \"user\"\n    },\n    \"accessToken\": \"jwt_access_token\",\n    \"refreshToken\": \"jwt_refresh_token\"\n  }\n}"
+          }]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/refresh", "host": ["{{baseUrl}}"], "path": ["auth", "refresh"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/user/me", "host": ["{{baseUrl}}"], "path": ["user", "me"] }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}" },
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/search?page=1&limit=20&search=perfume",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "search"],
+              "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "20" }, { "key": "search", "value": "perfume" }]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/products/:id", "host": ["{{baseUrl}}"], "path": ["products", ":id"], "variable": [{ "key": "id", "value": "65f123abc456def789" }] }
+          }
+        },
+        {
+          "name": "Bestsellers",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/products/bestsellers", "host": ["{{baseUrl}}"], "path": ["products", "bestsellers"] } }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/cart/", "host": ["{{baseUrl}}"], "path": ["cart", ""] }
+          }
+        },
+        {
+          "name": "Update Cart",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"items\": [{\n    \"productId\": \"65f123abc456def789\",\n    \"variantId\": \"v1\",\n    \"quantity\": 2\n  }]\n}" },
+            "url": { "raw": "{{baseUrl}}/cart/", "host": ["{{baseUrl}}"], "path": ["cart", ""] }
+          }
+        },
+        {
+          "name": "Sync Cart",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"items\": [{\n    \"productId\": \"65f123abc456def789\",\n    \"variantId\": \"v1\",\n    \"quantity\": 1\n  }]\n}" },
+            "url": { "raw": "{{baseUrl}}/cart/sync", "host": ["{{baseUrl}}"], "path": ["cart", "sync"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "List Addresses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/addresses/", "host": ["{{baseUrl}}"], "path": ["addresses", ""] }
+          }
+        },
+        {
+          "name": "Create Address",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"9876543210\",\n  \"addressLine1\": \"123 Main St\",\n  \"city\": \"Mumbai\",\n  \"state\": \"Maharashtra\",\n  \"pincode\": \"400001\",\n  \"country\": \"India\",\n  \"type\": \"home\",\n  \"isDefault\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/addresses/", "host": ["{{baseUrl}}"], "path": ["addresses", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"shippingAddressId\": \"65f123abc456def789\",\n  \"phone\": \"9876543210\",\n  \"email\": \"john@example.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/orders/", "host": ["{{baseUrl}}"], "path": ["orders", ""] }
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"orderId\": \"65f123abc456def789\",\n  \"razorpayPaymentId\": \"pay_123\",\n  \"razorpayOrderId\": \"order_rp123\",\n  \"razorpaySignature\": \"sig_123\"\n}" },
+            "url": { "raw": "{{baseUrl}}/orders/verify", "host": ["{{baseUrl}}"], "path": ["orders", "verify"] }
+          }
+        },
+        {
+          "name": "My Orders",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": { "raw": "{{baseUrl}}/orders/my-orders", "host": ["{{baseUrl}}"], "path": ["orders", "my-orders"] } }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "formdata", "formdata": [{ "key": "productId", "value": "65f123abc456def789", "type": "text" }, { "key": "rating", "value": "5", "type": "text" }, { "key": "comment", "value": "Great perfume!", "type": "text" }] },
+            "url": { "raw": "{{baseUrl}}/reviews/", "host": ["{{baseUrl}}"], "path": ["reviews", ""] }
+          }
+        },
+        {
+          "name": "Get by Product",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/reviews/product/:productId", "host": ["{{baseUrl}}"], "path": ["reviews", "product", ":productId"], "variable": [{ "key": "productId", "value": "65f123abc456def789" }] } }
+        }
+      ]
+    },
+    {
+      "name": "Sessions",
+      "item": [
+        {
+          "name": "List Sessions",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": { "raw": "{{baseUrl}}/sessions/", "host": ["{{baseUrl}}"], "path": ["sessions", ""] } }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "Create Product",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+                "body": { "mode": "raw", "raw": "{\n  \"name\": \"Luxury Perfume\",\n  \"slug\": \"luxury-perfume\",\n  \"description\": \"A great scent\",\n  \"brand\": { \"id\": \"b1\", \"name\": \"BrandX\" },\n  \"category\": { \"id\": \"c1\", \"name\": \"Perfumes\" },\n  \"type\": \"perfume\",\n  \"gender\": \"unisex\",\n  \"perfumeNotes\": { \"top\": [\"Lemon\"], \"heart\": [\"Rose\"], \"base\": [\"Musk\"] },\n  \"concentration\": \"parfum\",\n  \"season\": \"all-season\",\n  \"images\": [{ \"url\": \"https://example.com/img.jpg\", \"isPrimary\": true }],\n  \"variants\": [{ \"id\": \"v1\", \"size\": \"100ml\", \"unit\": \"ml\", \"price\": 5000, \"stock\": 10, \"sku\": \"LP-100\", \"isAvailable\": true }],\n  \"basePrice\": 5000,\n  \"isActive\": true,\n  \"isArchived\": false,\n  \"tags\": [\"luxury\", \"perfume\"],\n  \"shipping\": { \"weight\": 0.5, \"dimensions\": { \"length\": 10, \"width\": 10, \"height\": 10 } }\n}" },
+                "url": { "raw": "{{baseUrl}}/admin/products", "host": ["{{baseUrl}}"], "path": ["admin", "products"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "List All Orders",
+              "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/admin/orders/", "host": ["{{baseUrl}}"], "path": ["admin", "orders", ""] } }
+            },
+            {
+              "name": "Update Status",
+              "request": {
+                "method": "PATCH",
+                "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+                "body": { "mode": "raw", "raw": "{\n  \"status\": \"shipped\",\n  \"description\": \"Package handed over to courier\"\n}" },
+                "url": { "raw": "{{baseUrl}}/admin/orders/:id/status", "host": ["{{baseUrl}}"], "path": ["admin", "orders", ":id", "status"], "variable": [{ "key": "id", "value": "65f123abc456def789" }] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delivery",
+          "item": [
+            {
+              "name": "Track Shipment",
+              "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/admin/delivery/track/:awb", "host": ["{{baseUrl}}"], "path": ["admin", "delivery", "track", ":awb"], "variable": [{ "key": "awb", "value": "123456789" }] } }
+            },
+            {
+              "name": "Generate AWB",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+                "body": { "mode": "raw", "raw": "{\n  \"shipment_id\": \"ship_123\"\n}" },
+                "url": { "raw": "{{baseUrl}}/admin/delivery/awb", "host": ["{{baseUrl}}"], "path": ["admin", "delivery", "awb"] }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5001/api", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "refreshToken", "value": "", "type": "string" },
+    { "key": "adminToken", "value": "", "type": "string" }
+  ]
+}

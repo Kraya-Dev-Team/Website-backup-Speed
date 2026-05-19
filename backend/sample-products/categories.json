@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Luxury Perfumes",
+    "slug": "luxury",
+    "description": "Premium luxury fragrances for special occasions",
+    "isFeatured": true,
+    "isActive": true,
+    "order": 1
+  },
+  {
+    "name": "Floral Collection",
+    "slug": "floral",
+    "description": "Beautiful floral fragrances for women",
+    "isFeatured": true,
+    "isActive": true,
+    "order": 2
+  },
+  {
+    "name": "Fresh Collection",
+    "slug": "fresh",
+    "description": "Light and refreshing scents for everyday wear",
+    "isFeatured": true,
+    "isActive": true,
+    "order": 3
+  },
+  {
+    "name": "Oriental Collection",
+    "slug": "oriental",
+    "description": "Warm and exotic oriental fragrances",
+    "isFeatured": true,
+    "isActive": true,
+    "order": 4
+  }
+]

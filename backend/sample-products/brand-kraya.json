@@ -1,0 +1,17 @@
+{
+  "name": "Kraya",
+  "slug": "kraya",
+  "description": "Premium perfume brand offering luxurious fragrances for the modern individual. Kraya combines traditional craftsmanship with contemporary scents.",
+  "logo": {
+    "url": "https://example.com/kraya-logo.png",
+    "alt": "Kraya Logo"
+  },
+  "country": "UAE",
+  "founded": 2020,
+  "website": "https://kraya.com",
+  "isFeatured": true,
+  "isActive": true,
+  "order": 1,
+  "metaTitle": "Kraya - Premium Perfume Brand",
+  "metaDescription": "Discover Kraya premium perfumes - luxurious fragrances for men and women."
+}

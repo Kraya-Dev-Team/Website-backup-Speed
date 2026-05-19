@@ -1,0 +1,65 @@
+{
+  "name": "Kraya Velvet Amber",
+  "slug": "kraya-velvet-amber",
+  "description": "A warm and sensual amber fragrance that wraps you in luxury. Rich amber notes are enhanced with hints of vanilla, benzoin, and soft woods, creating a cozy and inviting aura that is perfect for cooler weather.",
+  "shortDescription": "Warm amber with vanilla and woods",
+  "brand": {
+    "id": "kraya",
+    "name": "Kraya"
+  },
+  "category": {
+    "id": "oriental",
+    "name": "Oriental Collection"
+  },
+  "type": "perfume",
+  "gender": "unisex",
+  "perfumeNotes": {
+    "top": ["cinnamon", "cardamom", "orange"],
+    "heart": ["amber", "labdanum", "frankincense"],
+    "base": ["vanilla", "benzoin", "sandalwood", "musk"]
+  },
+  "concentration": "parfum",
+  "season": "fall",
+  "mood": ["warm", "cozy", "sensual"],
+  "images": [
+    { "url": "https://example.com/kraya-velvet-amber-1.jpg", "isPrimary": true },
+    { "url": "https://example.com/kraya-velvet-amber-2.jpg" }
+  ],
+  "variants": [
+    {
+      "id": "var-007",
+      "size": "30",
+      "unit": "ml",
+      "price": 5000,
+      "stock": 25,
+      "sku": "KVA-30ML",
+      "isAvailable": true
+    },
+    {
+      "id": "var-008",
+      "size": "50",
+      "unit": "ml",
+      "price": 7800,
+      "stock": 15,
+      "sku": "KVA-50ML",
+      "isAvailable": true
+    }
+  ],
+  "basePrice": 5000,
+  "rating": 4.9,
+  "reviewCount": 67,
+  "isFeatured": true,
+  "isNew": true,
+  "isBestseller": false,
+  "isActive": true,
+  "isArchived": false,
+  "tags": ["amber", "oriental", "warm", "fall", "luxury", "winter"],
+  "shipping": {
+    "weight": 140,
+    "dimensions": { "length": 7, "width": 5, "height": 11 },
+    "freeShipping": true,
+    "shippingTime": "2-4 business days"
+  },
+  "metaTitle": "Kraya Velvet Amber - Premium Unisex Parfum",
+  "metaDescription": "Indulge in Kraya Velvet Amber, a luxurious unisex Parfum with warm amber, vanilla and woods."
+}
