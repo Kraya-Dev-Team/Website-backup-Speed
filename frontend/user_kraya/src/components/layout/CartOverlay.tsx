@@ -7,10 +7,15 @@ import { useCart } from "@/contexts/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 import SafeProductImage from "@/components/products/SafeProductImage";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 export default function CartOverlay() {
   const { cart, isOpen, setIsOpen, updateQuantity, changeVariant, removeFromCart, isLoading } = useCart();
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  // Hook must run unconditionally — lock body scroll while the cart is open.
+  // Coordinated with all other modals via reference-counted lock.
+  useBodyScrollLock(isOpen);
 
   if (!isOpen) return null;
 

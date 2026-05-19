@@ -2,17 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  MapPin, 
-  Plus, 
-  Trash2, 
-  Home, 
-  Briefcase, 
-  Compass, 
-  Phone, 
-  Loader2 
+import {
+  MapPin,
+  Plus,
+  Trash2,
+  Home,
+  Briefcase,
+  Compass,
+  Phone,
+  Loader2
 } from "lucide-react";
 import { type Address } from "@/lib/api";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 interface AddressBookProps {
   addresses: Address[];
@@ -38,20 +39,8 @@ export default function AddressBook({
   setAddressForm
 }: AddressBookProps) {
   
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (isAdding) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-      document.documentElement.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-      document.documentElement.style.overflow = "unset";
-    };
-  }, [isAdding]);
+  // Reference-counted scroll lock; safe to nest with other modals.
+  useBodyScrollLock(isAdding);
 
   return (
     <>

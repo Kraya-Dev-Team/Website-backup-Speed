@@ -345,7 +345,7 @@ function BackgroundMedia({ scrollYProgress, data }: { scrollYProgress: any, data
   }, [scrollYProgress, data.length]);
 
   return (
-    <div className="absolute -inset-[20px] overflow-hidden blur-[8px] brightness-[0.7] scale-[1.05] will-change-[filter,transform]">
+    <div className="absolute -inset-[20px] overflow-hidden blur-[8px] brightness-[0.7] scale-[1.05] will-change-[filter]">
       {data.map((item, idx) => {
         const isActive = idx === activeIdx;
         return (

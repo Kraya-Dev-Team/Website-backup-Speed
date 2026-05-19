@@ -52,6 +52,9 @@ export default function SafeProductImage({
       src={src}
       alt={alt}
       onError={() => setErrored(true)}
+      loading={_priority ? "eager" : "lazy"}
+      decoding="async"
+      sizes={_sizes}
       className={`${className ?? ""} ${fill ? "absolute inset-0 w-full h-full" : ""} object-cover`}
     />
   );

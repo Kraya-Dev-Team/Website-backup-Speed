@@ -21,6 +21,7 @@ import AnimatedBackgroundText from "@/components/ui/AnimatedBackgroundText";
 import { addressesApi, type Address } from "@/lib/api";
 import OrderHistory from "@/components/profile/OrderHistory";
 import AddressBook from "@/components/profile/AddressBook";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 function ProfileContent() {
   const { user, isLoggedIn, isLoading: authLoading, logout, setUser } = useAuth();
@@ -105,20 +106,8 @@ function ProfileContent() {
     }
   }, [activeSection, isLoggedIn]);
 
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (isAddingAddress) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-      document.documentElement.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-      document.documentElement.style.overflow = "unset";
-    };
-  }, [isAddingAddress]);
+  // Reference-counted body scroll lock; coordinates with all other modals.
+  useBodyScrollLock(isAddingAddress);
 
   const fetchAddresses = async () => {
     setAddressesLoading(true);

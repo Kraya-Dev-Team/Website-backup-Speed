@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { fadeUp } from "@/lib/animations";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
@@ -53,6 +54,12 @@ export default function Footer() {
   const router = useRouter();
   const pathname = usePathname();
 
+  // Pause the infinite blob animations when the footer is offscreen — the
+  // animation choreography is identical when in view, but we stop paying GPU
+  // + main-thread cost on every page above the footer.
+  const blobAreaRef = useRef<HTMLDivElement>(null);
+  const blobInView = useInView(blobAreaRef, { amount: 0 });
+
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (pathname === "/") {
@@ -93,12 +100,12 @@ export default function Footer() {
   return (
     <footer className="relative z-0 w-full h-auto md:h-[100vh] bg-white overflow-hidden border-t border-neutral-100 flex flex-col">
       {/* Background Animated Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+      <div ref={blobAreaRef} className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
         <motion.div
-          animate={{
+          animate={blobInView ? {
             x: [0, 30, -30, 0],
             y: [0, 20, -20, 0],
-          }}
+          } : { x: 0, y: 0 }}
           transition={{
             duration: 25,
             repeat: Infinity,
@@ -107,10 +114,10 @@ export default function Footer() {
           className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-cream-dark/40 blur-[120px] rounded-full"
         />
         <motion.div
-          animate={{
+          animate={blobInView ? {
             x: [0, -40, 40, 0],
             y: [0, -30, 30, 0],
-          }}
+          } : { x: 0, y: 0 }}
           transition={{
             duration: 30,
             repeat: Infinity,

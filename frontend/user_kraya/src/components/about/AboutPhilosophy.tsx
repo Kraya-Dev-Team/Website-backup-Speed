@@ -31,7 +31,7 @@ export default function AboutPhilosophy({ isReady }: { isReady: boolean }) {
               className="h-full w-full relative overflow-hidden"
             >
               <SafeImage
-                src="/about_craft.png"
+                src="/about_craft.webp"
                 alt="The Craftsman"
                 className="grayscale hover:grayscale-0 transition-all duration-1000"
               />

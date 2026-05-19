@@ -24,19 +24,29 @@ body {
   background-color: var(--color-cream);
   color: var(--color-charcoal);
   font-family: var(--font-sans);
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE10+ */
-  user-select: none;         /* Standard */
+}
+
+/* Selectively disable text selection on luxury display copy without breaking
+   site-wide mobile gesture / accessibility (long-press to copy, etc.). Apply
+   .no-select on a wrapper to opt into the previous behavior. */
+.no-select,
+.no-select * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .font-serif {
   font-family: var(--font-serif);
 }
 
-/* Smooth scrolling/snapping */
-html {
+/* Prevent horizontal scroll. `clip` is the modern equivalent of `hidden`
+   that does NOT create a containing block, so the compositor has less to
+   track during scroll. Fallback to `hidden` for legacy browsers. */
+html, body {
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Custom scrollbar */

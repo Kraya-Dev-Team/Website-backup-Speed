@@ -120,6 +120,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Preload the hero LCP image + logo so the browser starts fetching
+            them during HTML parse, before React mounts. Saves ~200-500 ms
+            of LCP time on cold cache. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/home/hero/main.jpeg"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/logo-landscape.svg"
+          type="image/svg+xml"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

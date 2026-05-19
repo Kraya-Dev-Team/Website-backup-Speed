@@ -6,6 +6,7 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-
 import { Menu, X, ShoppingCart, User, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import LoginModal from "@/components/auth/LoginModal";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -20,28 +21,27 @@ export default function Navbar() {
   const { isLoggedIn, isLoading, logout, showLogin, setShowLogin } = useAuth();
   const { cart, setIsOpen: setIsCartOpen } = useCart();
 
+  // Latch state so we only call setState on threshold crossings, not on every
+  // scroll frame. Previously this fired setAtTop + setIsHidden 60+ times per
+  // second, re-rendering the entire Navbar tree (with a motion.div layoutId)
+  // on every frame of scroll.
   useMotionValueEvent(scrollY, "change", (latest: number) => {
-    setAtTop(latest <= 50);
+    const nextAtTop = latest <= 50;
+    if (nextAtTop !== atTop) {
+      setAtTop(nextAtTop);
+    }
 
     const previous = scrollY.getPrevious();
     const threshold = typeof window !== "undefined" ? window.innerHeight * 0.8 : 500;
-
-    if (previous !== undefined && latest > previous && latest > threshold) {
-      setIsHidden(true);
-    } else {
-      setIsHidden(false);
+    const nextHidden = previous !== undefined && latest > previous && latest > threshold;
+    if (nextHidden !== isHidden) {
+      setIsHidden(nextHidden);
     }
   });
 
-  // Prevent scroll when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => { document.body.style.overflow = "unset"; };
-  }, [isMenuOpen]);
+  // Reference-counted scroll lock — coexists safely with CartOverlay,
+  // LoginModal, profile/checkout modals.
+  useBodyScrollLock(isMenuOpen);
 
   const navLinks = [
     { label: "Products", href: "/products" },

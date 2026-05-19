@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function PresenceSection() {
   return (
-    <section className="relative w-full min-h-[400px] sm:min-h-screen flex items-start overflow-hidden bg-[#fcfcfa] pt-10 sm:pt-16">
+    <section className="isolate relative w-full min-h-[400px] sm:min-h-screen flex items-start overflow-hidden bg-[#fcfcfa] pt-10 sm:pt-16">
       {/* Background Image with Grain and Soft Lighting */}
       <div className="absolute inset-0 z-0">
         <Image

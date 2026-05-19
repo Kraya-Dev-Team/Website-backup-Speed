@@ -70,17 +70,10 @@ const ParallaxImageSection = memo(function ParallaxImageSection({
 
   if (animation2) {
     return (
-      <section 
+      <section
         ref={containerRef}
-        className="relative w-full overflow-hidden bg-black
-                   h-[70vh] md:h-[100vh] max-md:h-[90vh] will-change-transform"
-        style={{ 
-          clipPath: "inset(0 0 0 0)",
-          transform: "translateZ(0)",
-          WebkitTransform: "translateZ(0)",
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden"
-        }}
+        className="relative w-full overflow-hidden bg-black h-[70vh] md:h-[100vh] max-md:h-[90vh]"
+        style={{ clipPath: "inset(0 0 0 0)" }}
       >
         <div className="fixed inset-0 w-full h-full pointer-events-none">
           <Image
@@ -88,7 +81,7 @@ const ParallaxImageSection = memo(function ParallaxImageSection({
             alt={alt}
             fill
             className="object-cover"
-            priority
+            loading="lazy"
             sizes="100vw"
           />
         </div>
@@ -99,27 +92,18 @@ const ParallaxImageSection = memo(function ParallaxImageSection({
   }
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      className="relative w-full overflow-hidden bg-black h-auto max-md:h-[90vh] will-change-transform"
-      style={{
-        transform: "translateZ(0)",
-        WebkitTransform: "translateZ(0)",
-        backfaceVisibility: "hidden",
-        WebkitBackfaceVisibility: "hidden"
-      }}
+      className="relative w-full overflow-hidden bg-black h-auto max-md:h-[90vh]"
     >
-      <motion.div 
-        style={{ 
-          scale, 
-          y, 
-          opacity, 
-          z: 0,
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          transformStyle: "preserve-3d"
-        }}
-        className="relative w-full h-full will-change-transform"
+      {/* Single GPU hint on the only animated element. The previous stack of
+         will-change + translateZ(0) + backfaceVisibility + preserve-3d on
+         multiple nested elements produced a permanent compositor layer with
+         no 3D children to justify preserve-3d, and caused extra paint
+         invalidations on every scroll-driven scale/y/opacity tick. */}
+      <motion.div
+        style={{ scale, y, opacity, willChange: "transform" }}
+        className="relative w-full h-full"
       >
         {/* On desktop we use Next.js Image component inside a 16:9 aspect-ratio container to enable Modern WebP formats & responsive scaling */}
         <div className="hidden md:block w-full relative aspect-[16/9] overflow-hidden">
@@ -128,7 +112,7 @@ const ParallaxImageSection = memo(function ParallaxImageSection({
             alt={alt}
             fill
             className="object-cover"
-            priority
+            loading="lazy"
             sizes="100vw"
           />
         </div>
@@ -140,7 +124,7 @@ const ParallaxImageSection = memo(function ParallaxImageSection({
             alt={alt}
             fill
             className="object-cover"
-            priority
+            loading="lazy"
             sizes="100vw"
           />
         </div>

@@ -38,18 +38,48 @@ export default function DynamicHalftone({ isMobile }: { isMobile?: boolean }) {
 
     if (isMobile) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+    // Cache the container rect; refresh only on resize/scroll instead of per
+    // mousemove (getBoundingClientRect is a layout read that costs ~0.1ms each).
+    let rectCache: DOMRect | null = containerRef.current?.getBoundingClientRect() ?? null;
+    const refreshRect = () => {
+      rectCache = containerRef.current?.getBoundingClientRect() ?? null;
+    };
+
+    // rAF-throttle the mouseX/mouseY writes — feeds the dot springs at most
+    // once per frame regardless of incoming mousemove rate.
+    let pendingClientX = 0;
+    let pendingClientY = 0;
+    let pending = false;
+    let rafId: number | null = null;
+    const flush = () => {
+      rafId = null;
+      if (!pending || !rectCache) return;
+      pending = false;
+      const x = pendingClientX - rectCache.left - rectCache.width / 2;
+      const y = pendingClientY - rectCache.top - rectCache.height / 2;
       mouseX.set(x);
       mouseY.set(y);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isMobile]);
+    const handleMouseMove = (e: MouseEvent) => {
+      pendingClientX = e.clientX;
+      pendingClientY = e.clientY;
+      pending = true;
+      if (rafId === null) {
+        rafId = window.requestAnimationFrame(flush);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("resize", refreshRect);
+    window.addEventListener("scroll", refreshRect, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", refreshRect);
+      window.removeEventListener("scroll", refreshRect);
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+    };
+  }, [isMobile, mouseX, mouseY]);
 
   return (
     <motion.div 

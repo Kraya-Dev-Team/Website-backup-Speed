@@ -59,7 +59,7 @@ export default function AboutStory({ isReady }: { isReady: boolean }) {
             <div className="absolute inset-0 border border-charcoal/10 -translate-x-6 translate-y-6 z-0" />
             <div className="relative h-full w-full overflow-hidden shadow-2xl">
               <SafeImage
-                src="/about_2.png"
+                src="/about_2.webp"
                 alt="Natural Ingredients"
               />
             </div>

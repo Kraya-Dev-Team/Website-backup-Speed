@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
    Package,
@@ -31,6 +31,14 @@ interface OrderHistoryProps {
 export default function OrderHistory({ orders, isLoading }: OrderHistoryProps) {
    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
    const invoiceRef = useRef<HTMLDivElement>(null);
+
+   // Timeline was being reversed on every render via `timeline.slice().reverse().map(...)`.
+   // Memoize against the selected order's timeline reference so re-renders of
+   // the modal (hover, button press, etc.) don't keep rebuilding the array.
+   const reversedTimeline = useMemo(() => {
+      const tl = (selectedOrder as any)?.timeline;
+      return Array.isArray(tl) ? tl.slice().reverse() : [];
+   }, [selectedOrder]);
 
    const handlePrint = useReactToPrint({
       contentRef: invoiceRef,
@@ -360,7 +368,7 @@ export default function OrderHistory({ orders, isLoading }: OrderHistoryProps) {
                                     <div className="h-[1px] flex-1 bg-charcoal/5" />
                                  </div>
                                  <div className="space-y-6 pl-5 border-l border-charcoal/5 ml-2">
-                                    {(selectedOrder as any).timeline?.slice().reverse().map((event: any, idx: number) => (
+                                    {reversedTimeline.map((event: any, idx: number) => (
                                        <div key={idx} className="relative">
                                           <div className="absolute -left-[24.5px] top-1.5 w-2.5 h-2.5 rounded-full bg-charcoal/10 border-2 border-cream transition-colors group-hover:bg-brand-500" />
                                           <div className="space-y-1">

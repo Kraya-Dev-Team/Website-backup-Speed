@@ -109,7 +109,14 @@ export default function LoginModal({ onClose }: Props) {
 
   const countrySelectorRef = useRef<HTMLDivElement>(null);
 
+  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  const [showCountrySelector, setShowCountrySelector] = useState(false);
+
+  // Only attach the document mousedown listener while the country selector is
+  // actually open. Previously it ran for the entire LoginModal lifetime,
+  // intercepting every click site-wide for no reason.
   useEffect(() => {
+    if (!showCountrySelector) return;
     function handleClickOutside(event: MouseEvent) {
       if (countrySelectorRef.current && !countrySelectorRef.current.contains(event.target as Node)) {
         setShowCountrySelector(false);
@@ -117,10 +124,7 @@ export default function LoginModal({ onClose }: Props) {
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
-  const [showCountrySelector, setShowCountrySelector] = useState(false);
+  }, [showCountrySelector]);
 
   const fullPhoneNumber = `${selectedCountry.code}${phone}`;
 

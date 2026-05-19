@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef, ReactNode } from "react";
 import { cartApi, productsApi, type Cart, type CartItem } from "@/lib/api";
 import { useAuth } from "./AuthContext";
 
@@ -25,20 +25,34 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Per-session product cache: avoid re-fetching the same product on every
+  // cart mutation. enrichCartData previously fired N parallel GETs every time
+  // the user adjusted quantity / variant / etc.
+  const productCacheRef = useRef<Map<string, any>>(new Map());
+
   const enrichCartData = useCallback(async (cartData: Cart): Promise<Cart> => {
     try {
-      // Enrich cart items with full product details to get variants
-      const productIds = Array.from(new Set(cartData.items.map(i => i.productId)));
-      const productDetails = await Promise.all(
-        productIds.map(id => 
-          productsApi.getById(id)
-            .then(r => r.success ? r.data : null)
-            .catch(() => null)
-        )
-      );
+      const cache = productCacheRef.current;
+      // Only fetch products we haven't already loaded this session.
+      const allProductIds = Array.from(new Set(cartData.items.map(i => i.productId)));
+      const missingIds = allProductIds.filter(id => !cache.has(id));
 
-      const productMap = productDetails.reduce((acc, p) => {
-        if (p) acc[p.id] = p;
+      if (missingIds.length > 0) {
+        const fetched = await Promise.all(
+          missingIds.map(id =>
+            productsApi.getById(id)
+              .then(r => r.success ? r.data : null)
+              .catch(() => null)
+          )
+        );
+        fetched.forEach(p => {
+          if (p) cache.set(p.id, p);
+        });
+      }
+
+      const productMap = allProductIds.reduce((acc, id) => {
+        const p = cache.get(id);
+        if (p) acc[id] = p;
         return acc;
       }, {} as Record<string, any>);
 
@@ -127,7 +141,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     syncCartOnLogin();
   }, [syncCartOnLogin]);
 
-  const addToCart = async (productId: string, variantId: string, quantity: number) => {
+  const addToCart = useCallback(async (productId: string, variantId: string, quantity: number) => {
     setIsLoading(true);
     try {
       const currentItems = cart?.items || [];
@@ -163,9 +177,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [cart, enrichCartData]);
 
-  const updateQuantity = async (itemId: string, quantity: number) => {
+  const updateQuantity = useCallback(async (itemId: string, quantity: number) => {
     if (!itemId) return;
     setIsLoading(true);
     try {
@@ -193,9 +207,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [cart, enrichCartData]);
 
-  const changeVariant = async (itemId: string, newVariantId: string) => {
+  const changeVariant = useCallback(async (itemId: string, newVariantId: string) => {
     if (!itemId || !newVariantId) return;
     setIsLoading(true);
     try {
@@ -257,9 +271,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [cart, enrichCartData]);
 
-  const removeFromCart = async (itemId: string) => {
+  const removeFromCart = useCallback(async (itemId: string) => {
     if (!itemId) return;
     setIsLoading(true);
     try {
@@ -283,23 +297,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [cart, enrichCartData]);
+
+  const value = useMemo<CartContextValue>(() => ({
+    cart,
+    isLoading,
+    refreshCart,
+    addToCart,
+    updateQuantity,
+    changeVariant,
+    removeFromCart,
+    isOpen,
+    setIsOpen,
+    clearCart,
+  }), [cart, isLoading, refreshCart, addToCart, updateQuantity, changeVariant, removeFromCart, isOpen, clearCart]);
 
   return (
-    <CartContext.Provider
-      value={{
-        cart,
-        isLoading,
-        refreshCart,
-        addToCart,
-        updateQuantity,
-        changeVariant,
-        removeFromCart,
-        isOpen,
-        setIsOpen,
-        clearCart,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

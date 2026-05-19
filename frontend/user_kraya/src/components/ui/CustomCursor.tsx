@@ -10,9 +10,9 @@ const CustomCursor = () => {
     const [isMobile, setIsMobile] = useState(true); // Default to true for SSR safety
     const [isVisible, setIsVisible] = useState(false);
 
-    const springConfigOuter = { 
-        stiffness: 1000, 
-        damping: 80      
+    const springConfigOuter = {
+        stiffness: 1000,
+        damping: 80,
     };
 
     const outerX = useSpring(cursorX, springConfigOuter);
@@ -24,7 +24,7 @@ const CustomCursor = () => {
             // Also detection for touch devices
             const mobileStatus = window.innerWidth < 1024 || window.matchMedia("(pointer: coarse)").matches;
             setIsMobile(mobileStatus);
-            
+
             if (mobileStatus) {
                 document.documentElement.classList.remove('custom-cursor');
             } else {
@@ -34,11 +34,47 @@ const CustomCursor = () => {
 
         checkDevice();
         window.addEventListener("resize", checkDevice);
-        
+
+        return () => {
+            window.removeEventListener("resize", checkDevice);
+            document.documentElement.classList.remove('custom-cursor');
+        };
+    }, []);
+
+    useEffect(() => {
+        // On touch / small viewports, do not attach any pointer listeners.
+        if (isMobile) return;
+
+        // rAF throttle so we update at most once per frame regardless of the
+        // mousemove event rate (which can be 200+/sec on high-Hz mice).
+        let pendingX = 0;
+        let pendingY = 0;
+        let hasPending = false;
+        let rafId: number | null = null;
+        let hasRevealed = false;
+
+        const flush = () => {
+            rafId = null;
+            if (!hasPending) return;
+            hasPending = false;
+            cursorX.set(pendingX);
+            cursorY.set(pendingY);
+            if (!hasRevealed) {
+                hasRevealed = true;
+                // One-time visibility flip after first move. React 18 bails out
+                // on subsequent setState(true) calls via Object.is, so this is
+                // safe to call again — but we gate with hasRevealed anyway.
+                setIsVisible(true);
+            }
+        };
+
         const moveCursor = (e: MouseEvent) => {
-            cursorX.set(e.clientX);
-            cursorY.set(e.clientY);
-            if (!isVisible) setIsVisible(true);
+            pendingX = e.clientX;
+            pendingY = e.clientY;
+            hasPending = true;
+            if (rafId === null) {
+                rafId = window.requestAnimationFrame(flush);
+            }
         };
 
         const handleMouseOver = (e: MouseEvent) => {
@@ -47,18 +83,17 @@ const CustomCursor = () => {
             setIsHovered(cursorAttr === 'invert');
         };
 
-        if (!isMobile) {
-            window.addEventListener("mousemove", moveCursor);
-            window.addEventListener("mouseover", handleMouseOver);
-        }
+        window.addEventListener("mousemove", moveCursor, { passive: true });
+        window.addEventListener("mouseover", handleMouseOver, { passive: true });
 
         return () => {
-            window.removeEventListener("resize", checkDevice);
             window.removeEventListener("mousemove", moveCursor);
             window.removeEventListener("mouseover", handleMouseOver);
-            document.documentElement.classList.remove('custom-cursor');
+            if (rafId !== null) {
+                window.cancelAnimationFrame(rafId);
+            }
         };
-    }, [isMobile, cursorX, cursorY, isVisible]);
+    }, [isMobile, cursorX, cursorY]);
 
     if (isMobile || !isVisible) return null;
 

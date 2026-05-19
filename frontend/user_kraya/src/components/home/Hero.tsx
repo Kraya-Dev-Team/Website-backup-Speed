@@ -11,12 +11,12 @@ const heroItems = [
   {
     label: "Karma",
     scent: "Warm skin. Dark notes.",
-    image: "/home/hero/Frame_201.png"
+    image: "/home/hero/Frame_201.webp"
   },
   {
     label: "Moksha",
     scent: "Cool air. Clean finish.",
-    image: "/home/hero/Frame_202.png"
+    image: "/home/hero/Frame_202.webp"
   }
 ];
 
@@ -33,7 +33,12 @@ export default function Hero() {
 
   // Pre-warm the browser cache for all cube section images while the user
   // is still in the hero, so they load instantly on scroll.
-  useImagePreloader(ANIMATION_DATA.map((d) => d.imageSrc));
+  // Defer until AFTER the LCP image loads (or first scroll/interaction) so
+  // the ~35 MB cube prefetch doesn't compete with the hero LCP decode.
+  useImagePreloader(
+    ANIMATION_DATA.map((d) => d.imageSrc),
+    { defer: "after-paint", trigger: mainImageLoaded }
+  );
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -63,41 +68,70 @@ export default function Hero() {
     }
   }, [carouselIndex, isMobile]);
 
+  // Only call setState on the 50px threshold crossing — not on every scroll
+  // frame. Without this, the entire Hero subtree reconciles 60+ times/sec
+  // during any scroll, on top of the Lenis tick and useScroll subscribers.
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 50);
-    if (latest > 50) {
+    const nextScrolled = latest > 50;
+    if (nextScrolled !== isScrolled) {
+      setIsScrolled(nextScrolled);
+    }
+    if (nextScrolled && !hasScrolledOnce) {
       setHasScrolledOnce(true);
     }
   });
 
+  // Pre-promote the outer mount-fade to a GPU layer ONLY while the 2s reveal
+  // is in flight, then drop the hint so the layer can be discarded.
+  // Without this, the first frame creates the compositor layer (causing the
+  // tiny first-paint hitch); a stale will-change would keep the layer alive
+  // forever, eating GPU memory.
+  const heroFadeRef = useRef<HTMLDivElement>(null);
+
   return (
-    <section ref={heroRef} className="relative h-screen w-full overflow-hidden flex flex-col justify-end">
-      {/* Background images container - Fades on scroll downwards */}
-      <motion.div 
+    <section ref={heroRef} className="isolate relative h-screen w-full overflow-hidden flex flex-col justify-end">
+      {/* Background images container - Fades on scroll downwards.
+          pointer-events-none: this layer is purely decorative; interactive
+          children (logo, subtitle, bottom bar) sit in a sibling z-10 tree.
+          Without this, the full-viewport motion.div participates in every
+          mousemove hit-test even though nothing inside is interactive. */}
+      <motion.div
+        ref={heroFadeRef}
         initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 2, delay: 0, ease: [0.25, 1, 0.5, 1] }}
-        className="absolute inset-0"
+        style={{ willChange: "transform, opacity" }}
+        onAnimationComplete={() => {
+          if (heroFadeRef.current) heroFadeRef.current.style.willChange = "auto";
+        }}
+        className="pointer-events-none absolute inset-0"
       >
         <motion.div
           style={{ opacity: heroOpacity }} 
           className="absolute inset-0 overflow-hidden bg-black/50"
         >
-          {/* Default Background */}
+          {/* Default Background (LCP candidate). Explicit sizes/decoding/
+              fetchPriority help the browser prioritize the actual visible
+              hero image over the hover-only Frame_201/202 below. */}
           <div className={`absolute inset-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] ${(hoveredIndex !== null) ? "opacity-0" : "opacity-100"}`}>
             <SafeImage
               src="/home/hero/main.jpeg"
               alt="Kraya Luxury Perfume"
               className="object-cover object-center max-md:object-right opacity-100 brightness-60"
               priority
+              sizes="100vw"
+              decoding="async"
+              fetchPriority="high"
               onLoad={() => setMainImageLoaded(true)}
             />
           </div>
-          
-          {/* Dynamic Backgrounds from heroItems */}
+
+          {/* Dynamic Backgrounds from heroItems — visible only on hover/
+              carousel. Demoted from `priority` so they don't compete with
+              the LCP image for network + decoder budget. */}
           {heroItems.map((item, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className={`absolute inset-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
                 hoveredIndex === i ? "opacity-100" : "opacity-0"
               }`}
@@ -107,8 +141,10 @@ export default function Hero() {
                 alt={item.label}
                 fill
                 className="object-cover object-center max-md:object-right brightness-60"
-                priority
-                quality={85}
+                loading="eager"
+                decoding="async"
+                sizes="100vw"
+                quality={75}
               />
             </div>
           ))}

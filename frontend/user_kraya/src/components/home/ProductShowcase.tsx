@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { fadeUp, fadeIn } from "@/lib/animations";
 import RotatingScaleRing from "./RotatingScaleRing";
@@ -9,7 +10,7 @@ import DynamicHalftone from "./DynamicHalftone";
 const products = {
   MOKSHA: {
     name: "MOKSHA",
-    image: "/ic_moksha.png",
+    image: "/ic_moksha.webp",
     prices: {
       "100 mL": "1499"
     },
@@ -18,7 +19,7 @@ const products = {
   },
   KARMA: {
     name: "KARMA",
-    image: "/ic_karma.png",
+    image: "/ic_karma.webp",
     prices: {
       "100 mL": "1499"
     },
@@ -358,10 +359,13 @@ export default function ProductShowcase() {
               exit={{ opacity: 0, scale: 0.5, transition: { duration: 1.85, ease: [0.43, 0.13, 0.23, 0.96] } }}
               className="absolute inset-0 m-auto w-full h-[65%] flex items-center justify-center"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={activeData.image}
                 alt={`${activeData.name} perfume bottle`}
+                width={800}
+                height={1200}
+                priority
+                sizes="(max-width: 768px) 45vh, 82vh"
                 className="w-full h-full object-contain filter drop-shadow-2xl"
               />
             </motion.div>
